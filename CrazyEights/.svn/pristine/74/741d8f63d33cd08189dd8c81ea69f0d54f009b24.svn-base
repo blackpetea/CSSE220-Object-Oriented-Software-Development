@@ -1,0 +1,18 @@
+import java.util.ArrayList;
+
+public class Player {
+
+	private ArrayList<String> cards;//the all cards that a player have
+
+	public Player() {
+		this.cards = new ArrayList<>();
+	}
+
+	public ArrayList<String> getCards() {
+		return this.cards;
+	}
+
+	public void addCard(String new_card) {
+		this.cards.add(new_card);
+	}
+}

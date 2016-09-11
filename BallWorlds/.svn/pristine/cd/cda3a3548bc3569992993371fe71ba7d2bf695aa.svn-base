@@ -1,0 +1,60 @@
+package ballworlds;
+
+import java.awt.geom.Point2D;
+
+/**
+ * A ball that bounces off the walls.
+ * 
+ * @author Curt Clifton. Created Jan 22, 2011.
+ */
+public abstract class AbstractBouncer extends Ball {
+
+	private Point2D center;
+	private double x_velocity;
+	private double y_velocity;
+
+	/**
+	 * Constructs a abstract bouncer in the given world.
+	 * 
+	 * @param world
+	 */
+	public AbstractBouncer(BallEnvironment world) {
+		super(world);
+
+		// Set center of circle at the center of frame
+		this.center = world.getCenterPoint();
+		super.setCenterPoint(this.center);
+
+		// Set velocity randomly from-1 to 1
+		this.x_velocity = super.randomVelocity();
+		this.y_velocity = super.randomVelocity();
+	}
+
+	public Point2D getCenter() {
+		return this.center;
+	}
+	
+	public void setCenter(Point2D center) {
+		this.center=center;
+	}
+
+	/**
+	 * 
+	 * Method for both  moving and bouncing
+	 *
+	 * @return center point
+	 */
+	public Point2D bouncing() {
+		double new_x = super.getCenterPoint().getX() + this.x_velocity;
+		double new_y = super.getCenterPoint().getY() + this.y_velocity;
+		Point2D point = new Point2D.Double(new_x, new_y);
+
+		if (!this.getWorld().isInsideWorldX(point)) {
+			this.x_velocity = -this.x_velocity;
+		}
+		if (!this.getWorld().isInsideWorldY(point)) {
+			this.y_velocity = -this.y_velocity;
+		}
+		return point;
+	}
+}

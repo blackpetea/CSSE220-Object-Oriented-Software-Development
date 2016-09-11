@@ -1,0 +1,68 @@
+package ballworlds;
+
+import java.awt.Color;
+
+import util.Random;
+
+public class Exploder extends AbstractBouncer {
+
+	private int sizemulti;
+	private double initialRadius;
+	private double radius;
+	private Color color;
+
+	public Exploder(BallEnvironment world) {
+		super(world);
+		this.color = Color.PINK;
+		this.sizemulti = Random.randRange(2, 11);
+		this.radius = world.getSize().getWidth() / 30;
+		this.initialRadius = this.radius;
+	}
+
+	public void setRadius(double radius) {
+		this.radius = radius;
+	}
+
+	@Override
+	public Color getColor() {
+		return this.color;
+	}
+
+	@Override
+	public void updatePosition() {
+		super.setCenterPoint(super.bouncing());
+	}
+
+	@Override
+	public void updateSize() {
+		// For every 10ms, the size will grow 1% 
+		double new_r = this.radius * 1.001;
+
+		// Explodes when size is too large
+		if (new_r >= this.initialRadius * this.sizemulti) {
+			Exploder son_ball1 = new Exploder(super.getWorld());
+			Exploder son_ball2 = new Exploder(super.getWorld());
+			son_ball1.setCenter(super.getCenter());
+			son_ball2.setCenter(super.getCenter());
+			son_ball1.setRadius(this.radius / (2 * this.sizemulti));
+			son_ball2.setRadius(this.radius / (2 * this.sizemulti));
+			super.getWorld().addBall(son_ball1);
+			super.getWorld().addBall(son_ball2);
+			super.die();
+		}
+		this.radius = new_r;
+
+	}
+
+	@Override
+	public void updateColor() {
+		// Color does not change
+
+	}
+
+	@Override
+	public double getDiameter() {
+		return this.radius * 2;
+	}
+
+}

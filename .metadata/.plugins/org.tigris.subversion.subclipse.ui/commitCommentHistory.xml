@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommitComments>	<CommitComment>zhengm</CommitComment>
+	<CommitComment>Change getClassName() from abstract to non-abstract and return null</CommitComment>
+	<CommitComment>Laser donezhengm</CommitComment>
+	<CommitComment>Add Key Listener zhengm</CommitComment>
+	<CommitComment>Add some code for testing zhengm</CommitComment>
+	<CommitComment>Add a field called hero zhengm</CommitComment>
+	<CommitComment>ZHENGM</CommitComment>
+	<CommitComment>Add method to eject laser</CommitComment>
+	<CommitComment>Add more keys zhengm</CommitComment>
+	<CommitComment>Change the color</CommitComment>
+</CommitComments>

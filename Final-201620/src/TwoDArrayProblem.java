@@ -1,0 +1,39 @@
+
+public class TwoDArrayProblem {
+
+	/**
+	 * Given two 2D arrays of the same size, add the two arrays together,
+	 * treating the arrays as matrices. This means that the item at 0,0 in the
+	 * first array is added to the item at 0,0 in the second array, and the sum
+	 * is placed in 0,0 of the result array. This is repeated for each location
+	 * in the 2D arrays.
+	 * 
+	 * Here is an example of a sample run: int[][] first = { {1, 2, 3}, {4, 5,
+	 * 6}, {7, 8, 9}};
+	 * 
+	 * int[][] second = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+	 *
+	 * The result would be: result = { {2, 4, 6}, {8, 10, 12}, {14, 16, 18}};
+	 *
+	 * @param first
+	 *            The first 2D array
+	 * @param second
+	 *            The second 2D array
+	 * @return the result array of the two arrays added together
+	 */
+	public static int[][] addMatrices(int[][] first, int[][] second) {
+		if (first.length == 0) {
+			return new int[0][0];
+		}
+
+		int[][] res = new int[second.length][second[0].length];
+
+		for (int i = 0; i < first.length; i++) {
+			for (int j = 0; j < first[0].length; j++) {
+				res[i][j] = first[i][j] + second[i][j];
+			}
+		}
+
+		return res;
+	}
+}

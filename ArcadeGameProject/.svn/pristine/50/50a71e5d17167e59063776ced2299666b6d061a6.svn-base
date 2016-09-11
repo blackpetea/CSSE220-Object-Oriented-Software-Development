@@ -1,0 +1,163 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.image.BufferedImage;
+import java.util.List;
+
+import javax.swing.JComponent;
+
+/**
+ * Renders a world of balls on the GUI.
+ * 
+ * @author Curt Clifton. Created Jan 22, 2011.
+ */
+public class GameComponent extends JComponent {
+
+	private static final int FRAMES_PER_SECOND = 30;
+	private static final long REPAINT_INTERVAL_MS = 1000 / FRAMES_PER_SECOND;
+
+	private GameWorld world;
+
+	/**
+	 * Constructs a component for rendering the given game environment on the
+	 * GUI.
+	 * 
+	 * @param world
+	 */
+	public GameComponent(GameWorld world) {
+		this.world = world;
+
+		// Creates a separate "thread of execution" to trigger periodic
+		// repainting of this component.
+		Runnable repainter = new Runnable() {
+			@Override
+			public void run() {
+				// Periodically asks Java to repaint this component
+				try {
+					while (true) {
+						Thread.sleep(REPAINT_INTERVAL_MS);
+						repaint();
+					}
+				} catch (InterruptedException exception) {
+					// Stop when interrupted
+				}
+			}
+		};
+		new Thread(repainter).start();
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+
+		drawDrawable(g2, this.world, this.world.getType());
+
+		List<Drawable> drawableParts = this.world.getDrawableParts();
+		for (Drawable d : drawableParts) {
+			if (d.getType() == 0) {
+				drawDrawable(g2, d, 0);
+			}
+			if (d.getType() == 1) {
+				drawDrawable(g2, d, 1);
+			}
+			if (d.getType() == 2) {
+				drawDrawable(g2, d, 2);
+			}
+		}
+
+		g.setFont(new Font("Serif", Font.BOLD, (int) (48 * this.world.getScreenIndex())));
+		g.setColor(Color.PINK);
+		g.drawString(Integer.toString(this.world.getCurrentPlayer().getScore()),
+				(int) (540 * this.world.getScreenIndex()), (int) (45 * this.world.getScreenIndex()));
+
+		g.setFont(new Font("Serif", Font.BOLD, (int) (30 * this.world.getScreenIndex())));
+
+		int px = (int) (15 * this.world.getScreenIndex());
+		int py = (int) (30 * this.world.getScreenIndex());
+		int ly = (int) (60 * this.world.getScreenIndex());
+		int liy = (int) (90 * this.world.getScreenIndex());
+
+		if (this.world.getCurrentPlayer().getNumber() == 1) {
+			g.drawString("Player 1", px, py);
+		} else {
+			g.drawString("Player 2", px, py);
+		}
+		g.drawString("Level " + Integer.toString(this.world.getlevel().getlevel()), px, ly);
+		g.drawString("Life " + Integer.toString(this.world.getCurrentPlayer().getLives()), px, liy);
+
+		// End of game notification
+		int font1 = (int) (75 * this.world.getScreenIndex());
+		int font2 = (int) (45 * this.world.getScreenIndex());
+		int n1y = (int) (450 * this.world.getScreenIndex());
+		int p1x = (int) (210 * this.world.getScreenIndex());
+		int p1y = (int) (520 * this.world.getScreenIndex());
+		int p2y = (int) (565 * this.world.getScreenIndex());
+
+		if (this.world.getlevel().getlevel() == 4) {
+			if (this.world.getBOSS() != null) {
+				if (this.world.getBOSS().isBOSSLiving() == false) {
+					g.setFont(new Font("Serif", Font.BOLD, font1));
+					g.drawString("VICTORY", (int) (188 * this.world.getScreenIndex()), n1y);
+					g.setFont(new Font("Serif", Font.BOLD, font2));
+					g.drawString("Player 1: " + Integer.toString(this.world.getPlayerOne().getScore()), p1x, p1y);
+					g.drawString("Player 2: " + Integer.toString(this.world.getPlayerTwo().getScore()), p1x, p2y);
+					this.world.setIsPaused(true);
+
+					// this.world = new GameWorld();
+				}
+			}
+		}
+		if (this.world.isFail()) {
+			g.setFont(new Font("Serif", Font.BOLD, font1));
+			g.drawString("GAME OVER", (int) (128 * this.world.getScreenIndex()), n1y);
+			g.setFont(new Font("Serif", Font.BOLD, font2));
+			g.drawString("Player 1: " + Integer.toString(this.world.getPlayerOne().getScore()), p1x, p1y);
+			g.drawString("Player 2: " + Integer.toString(this.world.getPlayerTwo().getScore()), p1x, p2y);
+			this.world.setIsPaused(true);
+		}
+	}
+
+	/**
+	 * This helper method draws the given drawable object on the given graphics
+	 * area.
+	 * 
+	 * @param g2
+	 *            the graphics area on which to draw
+	 * @param d
+	 *            the drawable object
+	 */
+	private void drawDrawable(Graphics2D g2, Drawable d, int i) {
+		if (i == 0) {
+			Color color = d.getColor();
+			Shape shape = d.getShape();
+			g2.setColor(color);
+			g2.fill(shape);
+		}
+		if (i == 1) {
+			int widthOne = (int) (30 * this.world.getScreenIndex());
+			BufferedImage img = d.getImage();
+			g2.drawImage(img, (int) d.getX(), (int) d.getY(), widthOne, widthOne, null);
+		}
+		if (i == 2) {
+			int widthTwo = (int) (150 * this.world.getScreenIndex());
+			BufferedImage img = d.getImage();
+			g2.drawImage(img, (int) d.getX(), (int) d.getY(), widthTwo, widthTwo, null);
+
+			Color color = d.getColor();
+			Shape shape = d.getShape();
+			g2.setColor(color);
+			g2.fill(shape);
+		}
+		if (i == 3) {
+			int widthThree = (int) (720 * this.world.getScreenIndex());
+			int heightThree = (int) (960 * this.world.getScreenIndex());
+			BufferedImage img = d.getImage();
+			g2.drawImage(img, 0, 0, widthThree, heightThree, null);
+		}
+
+	}
+
+}

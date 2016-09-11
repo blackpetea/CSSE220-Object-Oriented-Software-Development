@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="118" key="HistoryTableProvider.HistoryDialog.Date"/>
+	<item value="50" key="UpdateDialogWithConflictHandling.location.y"/>
+	<item value="700" key="LockDialog.size.x"/>
+	<item value="450" key="TreeConflictsView.col.Description"/>
+	<item value="483" key="LockDialog.size.y"/>
+	<item value="423" key="RevertDialog.size.y"/>
+	<item value="C:/EclipseWorkspaces/csse220/ArcadeGameProject/src/Hero.java" key="TreeConflictsView.resource"/>
+	<item value="700" key="RevertDialog.size.x"/>
+	<item value="47" key="HistoryTableProvider.SVNHistoryPage.Revision"/>
+	<item value="843" key="ComparePropertiesDialog2.size.x"/>
+	<item value="176" key="SetSvnPropertyDialog.location.y"/>
+	<item value="467" key="ComparePropertiesDialog2.size.y"/>
+	<item value="573" key="SetSvnPropertyDialog.location.x"/>
+	<item value="234" key="HistoryTableProvider.SVNHistoryPage.Comment"/>
+	<item value="94" key="HistoryTableProvider.HistoryDialog.Author"/>
+	<item value="229" key="ComparePropertiesDialog2.location.y"/>
+	<item value="198" key="CommitDialog.location.y"/>
+	<item value="0" key="CommitDialog.location.x"/>
+	<item value="502" key="ComparePropertiesDialog2.location.x"/>
+	<item value="573" key="RevertDialog.location.x"/>
+	<item value="500" key="CommitDialog.weights.0"/>
+	<item value="500" key="CommitDialog.weights.1"/>
+	<item value="736" key="UpdateDialogWithConflictHandling.size.y"/>
+	<item value="48" key="HistoryTableProvider.HistoryDialog.Revision"/>
+	<item value="258" key="RevertDialog.location.y"/>
+	<item value="700" key="SetSvnPropertyDialog.size.x"/>
+	<item value="75" key="TreeConflictsView.col.Resource"/>
+	<item value="546" key="SetSvnPropertyDialog.size.y"/>
+	<item value="483" key="CommitDialog.size.y"/>
+	<item value="700" key="UpdateDialogWithConflictHandling.size.x"/>
+	<item value="1206" key="CommitDialog.size.x"/>
+	<item value="118" key="HistoryTableProvider.SVNHistoryPage.Date"/>
+	<item value="94" key="HistoryTableProvider.SVNHistoryPage.Author"/>
+	<item value="573" key="UpdateDialogWithConflictHandling.location.x"/>
+	<item value="false" key="TreeConflictsView.container"/>
+	<item value="218" key="LockDialog.location.y"/>
+	<item value="573" key="LockDialog.location.x"/>
+	<item value="235" key="HistoryTableProvider.HistoryDialog.Comment"/>
+	<section name="CommitWizard">
+		<item value="500" key="VWeight2"/>
+		<item value="500" key="VWeight1"/>
+		<item value="false" key="ShowCompare"/>
+	</section>
+	<section name="NewLocationWizard">
+		<list key="ConfigurationWizardMainPage.STORE_URL_ID">
+			<item value="http://svn.csse.rose-hulman.edu/repos/csse220-201620-zhengm"/>
+		</list>
+	</section>
+</section>

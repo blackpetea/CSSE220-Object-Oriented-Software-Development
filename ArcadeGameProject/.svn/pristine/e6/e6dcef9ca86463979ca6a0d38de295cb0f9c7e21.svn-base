@@ -1,0 +1,54 @@
+import java.awt.Color;
+import java.awt.geom.Point2D;
+
+/**
+ * A superclass for different types of bullet
+ * 
+ * @author Muqing Zheng,Created Feb 2, 2016.
+ */
+
+public abstract class Bullet extends Creature {
+
+	protected Color color;
+
+	public Bullet(GameWorld world, Point2D centerPoint) {
+		super(world, centerPoint);
+		this.diameter = 15;
+		this.color = Color.YELLOW;
+		this.setCenterPoint(centerPoint);
+	}
+
+	@Override
+	public Color getColor() {
+		return this.color;
+	}
+
+	@Override
+	public void updatePosition() {
+		this.setCenterPoint(this.moveBy(getCenterPoint(), 0, -this.speedy));
+		if (this.getCenterPoint().getY()<0) {
+			this.die();
+		}
+	}
+
+	@Override
+	public void updateSize() {
+
+	}
+
+	@Override
+	public void updateColor() {
+
+	}
+
+	@Override
+	public double getDiameter() {
+		return this.diameter;
+	}
+
+	@Override
+	public String getClassName() {
+		return "Bullet";
+	}
+
+}

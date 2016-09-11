@@ -1,0 +1,33 @@
+import javax.swing.JFrame;
+
+/**
+ * The main class for your arcade game.
+ * 
+ * You can design your game any way you like, but make the game start
+ * by running main here.
+ * 
+ * Also don't forget to write javadocs for your classes and functions!
+ * 
+ * @author Buffalo
+ *
+ */
+public class Main {
+
+	/**
+	 * Starts the application.
+	 * 
+	 * @param args
+	 *            ignored
+	 */
+	public static void main(String[] args) {
+		GameWorld myWorld = new GameWorld();
+		GameComponent myComponent = new GameComponent(myWorld);
+		JFrame frame = new GameFrame(myWorld);
+		
+		frame.add(myComponent);
+		frame.setSize(720, 1040);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+
+}

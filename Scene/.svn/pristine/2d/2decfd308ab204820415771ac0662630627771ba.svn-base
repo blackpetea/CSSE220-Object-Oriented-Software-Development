@@ -1,0 +1,135 @@
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
+
+public class Face {
+	private double centerx;
+	private double centery;
+	private double faceradius;
+	private Color facecolor;
+	private Color outlinecolor;
+	private Color eyecolor;
+	private Color mouthcolor;
+	private Ellipse2D.Double faceb;
+	private Ellipse2D.Double lefteye;
+	private Ellipse2D.Double righteye;
+	private Arc2D.Double mouthb;
+
+	public Face(double xcenterx, double xcentery, double xradius, Color xfacecolor, Color xoutline, Color xeye,
+			Color xmouth) {
+		this.centerx = xcenterx;
+		this.centery = xcentery;
+		this.faceradius = xradius;
+		this.facecolor = xfacecolor;
+		this.outlinecolor = xoutline;
+		this.eyecolor = xeye;
+		this.mouthcolor = xmouth;
+	}
+
+	public Face() {
+		this.centerx = 50;
+		this.centery = 100;
+		this.faceradius = 50;
+		this.facecolor = Color.yellow;
+		this.outlinecolor = Color.blue;
+		this.eyecolor = Color.black;
+		this.mouthcolor = Color.red;
+	}
+
+	public Ellipse2D.Double getFaceb() {
+		return this.faceb;
+	}
+
+	public void setFaceb() {
+		this.faceb = new Ellipse2D.Double(this.centerx - this.faceradius, this.centery - this.faceradius,
+				2 * this.faceradius, 2 * this.faceradius);
+		;
+	}
+
+	public Ellipse2D.Double getLefteye() {
+		return this.lefteye;
+	}
+
+	public void setLefteye() {
+		Point2D.Double startpoint = this.getEyeUpperLeftLocationFromCenterOfFace(true, this.faceradius);
+		this.lefteye = new Ellipse2D.Double(startpoint.getX(), startpoint.getY(), 2 * getEyeRadius(this.faceradius),
+				2 * getEyeRadius(this.faceradius));
+	}
+
+	public Ellipse2D.Double getRighteye() {
+		return this.righteye;
+	}
+
+	public void setRighteye() {
+		Point2D.Double startpoint = this.getEyeUpperLeftLocationFromCenterOfFace(false, this.faceradius);
+		this.righteye = new Ellipse2D.Double(startpoint.getX(), startpoint.getY(), 2 * getEyeRadius(this.faceradius),
+				2 * getEyeRadius(this.faceradius));
+	}
+
+	public Arc2D.Double getMouthb() {
+		return this.mouthb;
+	}
+
+	public void setMouthb() {
+		this.mouthb = new Arc2D.Double(this.centerx - 0.7 * this.faceradius, this.centery - 0.7 * this.faceradius,
+				1.4 * this.faceradius, 1.4 * this.faceradius, -15, -150, 1);
+	}
+
+	public void drawOn(Graphics2D graphics) {
+		this.setFaceb();
+		this.setLefteye();
+		this.setRighteye();
+
+		graphics.setColor(this.outlinecolor);
+		graphics.setStroke(new BasicStroke(3.0f));
+		graphics.draw(this.getFaceb());
+
+		graphics.setColor(this.facecolor);
+		graphics.fill(this.getFaceb());
+
+		graphics.setStroke(new BasicStroke(1.0f));
+		graphics.setColor(this.eyecolor);
+		graphics.translate(this.centerx, this.centery);
+		graphics.fill(this.getLefteye());
+		graphics.fill(this.getRighteye());
+		graphics.translate(-this.centerx, -this.centery);
+
+		graphics.setColor(this.mouthcolor);
+		this.setMouthb();
+		graphics.draw(this.getMouthb());
+	}
+
+	/**
+	 * Returns the upper left location of an eye based on the center of the face
+	 * and whether or not it's the left or right eye.
+	 * 
+	 * @param isLeftEye
+	 *            - true if it's the left eye, false if it's the
+	 * @param faceRadius
+	 *            - The radius of the eye
+	 * @return a point representing the upper left location of an eye relative
+	 *         to the center of a face
+	 */
+	private static Point2D.Double getEyeUpperLeftLocationFromCenterOfFace(boolean isLeftEye, double faceRadius) {
+		int multiplier = isLeftEye ? -1 : 1;
+		double eyeCenterX = ((faceRadius * .5) * Math.cos(Math.toRadians(45))) * multiplier;
+		double eyeCenterY = -((faceRadius * .5) * Math.sin(Math.toRadians(45)));
+		return new Point2D.Double(eyeCenterX - getEyeRadius(faceRadius), eyeCenterY - getEyeRadius(faceRadius));
+	}
+
+	/**
+	 * Returns the radius of an eye based on the radius of a face.
+	 * 
+	 * @param faceRadius
+	 *            - the radius of the face
+	 * @return
+	 */
+	private static double getEyeRadius(double faceRadius) {
+		return 0.28 * faceRadius;
+	}
+
+}

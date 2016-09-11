@@ -1,0 +1,139 @@
+import java.awt.Color;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.util.Random;
+
+public class Spider extends Creature {
+	private StopWatch timer;
+	private Random randomizer;
+	
+	public Spider(GameWorld world, Point2D centerPoint) {
+		super(world, centerPoint);
+		this.timer = new StopWatch();
+		timer.start();
+		this.randomizer = new Random();
+		this.color = Color.RED;
+		this.speedx = (1 - 2*randomizer.nextDouble()) * 2 * this.getWorld().getlevel().getlevel();
+		this.speedy = (1 - 2*randomizer.nextDouble()) * 2 * this.getWorld().getlevel().getlevel();
+		this.diameter = 20;
+		this.setCenterPoint(centerPoint);
+	}
+
+	@Override
+	public Color getColor() {
+		return this.color;
+	}
+
+	@Override
+	public void collide(Creature m) {
+		m.collideWithSpider(this);
+
+	}
+
+	@Override
+	public void collideWithMushroom(Mushroom m) {
+		// TODO Auto-generated method stub.
+
+	}
+
+	@Override
+	public void collideWithCentipede(Centipede m) {
+
+	}
+
+	@Override
+	public void collideWithHero(Hero m) {
+
+	}
+
+	@Override
+	public void collideWithScorpion(Scorpion m) {
+
+	}
+
+	@Override
+	public void collideWithFleas(Fleas m) {
+
+	}
+
+	@Override
+	public void collideWithSpider(Spider m) {
+
+	}
+
+	@Override
+	public void collideWithBullet(Bullet m) {
+		this.die();
+	}
+
+	@Override
+	public void updatePosition() {
+		if (timer.getElapsedTime() > 500) {
+			this.speedx = (1 - 2*randomizer.nextDouble()) * 2 * this.getWorld().getlevel().getlevel();
+			this.speedy = (1 - 2*randomizer.nextDouble()) * 2 * this.getWorld().getlevel().getlevel();
+			timer.reset();
+			timer.start();
+		}
+		
+		this.setCenterPoint(this.moveBy(speedx, speedy));
+	}
+
+	@Override
+	public void updateSize() {
+		// TODO Auto-generated method stub.
+
+	}
+
+	@Override
+	public void updateColor() {
+		// TODO Auto-generated method stub.
+
+	}
+
+	@Override
+	public double getDiameter() {
+		return this.diameter;
+	}
+
+	@Override
+	public String getClassName() {
+		return "Spider";
+	}
+
+	@Override
+	public void collideWithAPBeam(APBeam m) {
+		m.decreasePenetrationCount(1);
+		this.die();
+	}
+
+	@Override
+	public BufferedImage getImage() {
+		// TODO Auto-generated method stub.
+		return null;
+	}
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub.
+		return 0;
+	}
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub.
+		return 0;
+	}
+
+	@Override
+	public int getType() {
+		// TODO Auto-generated method stub.
+		return 0;
+	}
+
+	@Override
+	public void collideWithBoss(BOSS m) {
+		// TODO Auto-generated method stub.
+		
+	}
+
+}

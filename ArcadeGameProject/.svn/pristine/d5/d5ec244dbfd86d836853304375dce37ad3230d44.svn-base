@@ -1,0 +1,21 @@
+
+public class Player {
+	private int score;
+	private int lives;
+	private boolean winning;
+
+	public Player() {
+		this.score = 0;
+		this.lives = 3;
+		this.winning = false;
+	}
+
+	public int getScore() {
+		return this.score;
+	}
+
+	public void addScore(int score) {
+		this.score += score;
+	}
+
+}

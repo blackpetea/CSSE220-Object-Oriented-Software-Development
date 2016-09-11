@@ -1,0 +1,131 @@
+import java.awt.Color;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+
+public class Fleas extends Creature {
+
+	public Fleas(GameWorld world, Point2D centerPoint) {
+		super(world, centerPoint);
+		this.color = Color.WHITE;
+		this.speedx = 0;
+		this.speedy = 5;
+		this.diameter = 20;
+		this.setCenterPoint(centerPoint);
+	}
+
+	private void generateMushroom() {
+		if ((this.getCenterPoint().getY() + 10) % 20 == 0) {
+			double dice = Math.random();
+			if (dice > 0.8 && this.getCenterPoint().getY() < 550) {
+				this.getWorld().addCreature(new Mushroom(this.getWorld(), this.getCenterPoint()));
+			}
+		}
+	}
+
+	@Override
+	public Color getColor() {
+		return this.color;
+	}
+
+	@Override
+	public void collide(Creature m) {
+		m.collideWithFleas(this);
+
+	}
+
+	@Override
+	public void collideWithMushroom(Mushroom m) {
+
+	}
+
+	@Override
+	public void collideWithCentipede(Centipede m) {
+
+	}
+
+	@Override
+	public void collideWithHero(Hero m) {
+
+	}
+
+	@Override
+	public void collideWithScorpion(Scorpion m) {
+
+	}
+
+	@Override
+	public void collideWithFleas(Fleas m) {
+
+	}
+
+	@Override
+	public void collideWithSpider(Spider m) {
+	}
+
+	@Override
+	public void collideWithBullet(Bullet m) {
+		this.die();
+	}
+
+	@Override
+	public void updatePosition() {
+		Point2D newPoint = new Point2D.Double(this.getCenterPoint().getX(), this.getCenterPoint().getY() + this.speedy);
+		this.setCenterPoint(newPoint);
+		this.generateMushroom();
+		if (this.getCenterPoint().getY() > 640) {
+			this.die();
+		}
+
+	}
+
+	@Override
+	public void updateSize() {
+
+	}
+
+	@Override
+	public void updateColor() {
+
+	}
+
+	@Override
+	public double getDiameter() {
+		return this.diameter;
+	}
+
+	@Override
+	public String getClassName() {
+		return "Flea";
+	}
+
+	@Override
+	public void collideWithAPBeam(APBeam m) {
+		m.decreasePenetrationCount(1);
+		this.die();
+	}
+
+	@Override
+	public BufferedImage getImage() {
+		// TODO Auto-generated method stub.
+		return null;
+	}
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub.
+		return 0;
+	}
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub.
+		return 0;
+	}
+
+	@Override
+	public int getType() {
+		// TODO Auto-generated method stub.
+		return 0;
+	}
+
+}

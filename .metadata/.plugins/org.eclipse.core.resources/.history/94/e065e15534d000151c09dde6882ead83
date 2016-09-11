@@ -1,0 +1,57 @@
+import java.awt.geom.Point2D;
+import java.util.Random;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class MonsterGenerator implements Runnable {
+	private GameWorld world;
+	private Lock changeLock;
+	private Condition condition;
+
+	public MonsterGenerator(GameWorld world) {
+		this.world = world;
+		this.changeLock = new ReentrantLock();
+		this.condition = this.changeLock.newCondition();
+	}
+
+	/**
+	 * 
+	 * Generator Scorpion, Spider and Flea.
+	 *
+	 * @param difficulty
+	 *            of maps
+	 */
+	public void generateOtherEnermy(int difficulty) {
+		Random random = new Random();
+		double dice = random.nextInt(100);
+		if (dice > 99 - difficulty * difficulty) {// Generate
+													// a
+													// scorpion
+			Point2D scoCenter = new Point2D.Double(480, 10 + 20 * random.nextInt(23));
+			//this.world.addCreature(new Scorpion(this.world, scoCenter));
+		}
+		if (dice < 1 + difficulty * difficulty) {// Generate
+													// a Flea
+			Point2D fleaCenter = new Point2D.Double(10 + 20 * random.nextInt(23), 0);
+			this.world.addCreature(new Fleas(this.world, fleaCenter));
+		}
+	}
+
+	@Override
+	public void run() {
+		//this.changeLock.lock();
+		try {
+			while (true) {
+				Thread.sleep(100);
+				this.generateOtherEnermy(this.world.getlevel().getlevel());
+			}
+		} catch (InterruptedException ex) {
+
+		} finally {
+			//this.changeLock.unlock();
+		}
+
+	}
+
+}

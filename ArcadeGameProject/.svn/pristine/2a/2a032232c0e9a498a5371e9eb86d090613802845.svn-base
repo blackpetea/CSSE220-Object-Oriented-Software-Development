@@ -1,0 +1,271 @@
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+public class Mushroom extends Creature implements Drawable, Temporal, Relocatable {
+	private String name;
+	private double destruction;
+	private boolean isPostioned;
+	private BufferedImage image;
+	private Level level;
+
+	public Mushroom(GameWorld world, Point2D centerPoint,Level lel) {
+		super(world, centerPoint);
+		this.name = "Mushroom";
+		this.diameter = 30*this.getWorld().getScreenIndex();
+		this.destruction = 0;
+		this.isPostioned = false;
+		this.level = lel;
+	}
+
+	public boolean isPostioned() {
+		return this.isPostioned;
+	}
+
+	public void setPostioned(boolean isPostioned) {
+		this.isPostioned = isPostioned;
+	}
+
+	@Override
+	public Color getColor() {
+		return Color.CYAN;
+	}
+
+	@Override
+	public void updatePosition() {
+
+	}
+
+	@Override
+	public void updateSize() {
+	}
+
+	@Override
+	public void updateColor() {
+
+	}
+
+	@Override
+	public double getDiameter() {
+		return this.diameter;
+	}
+
+	@Override
+	public String getClassName() {
+		return this.name;
+	}
+
+	@Override
+	public Shape getShape() {
+		double x = getCenterPoint().getX();
+		double y = getCenterPoint().getY();
+		double size = getDiameter();
+		return new Rectangle2D.Double(x - size / 2, y - size / 2, size, size * this.destruction);
+	}
+
+	// -------------------------------------------------------------------------
+	// Abstract "Collision methods" that must be overridden by subclasses.
+
+	@Override
+	public void collide(Creature m) {
+		m.collideWithMushroom(this);
+
+	}
+
+	@Override
+	public void collideWithMushroom(Mushroom m) {
+
+	}
+
+	@Override
+	public void collideWithCentipede(Centipede m) {
+
+	}
+
+	@Override
+	public void collideWithHero(Hero m) {
+
+	}
+
+	@Override
+	public void collideWithBullet(Bullet m) {
+		if (!m.getClassName().equals("APBeam")) {
+			this.destruction++;
+		}
+		if (this.destruction == 8) {
+			this.getWorld().getCurrentPlayer().addScore(1);
+			this.die();
+		}
+	}
+
+	@Override
+	public void collideWithScorpion(Scorpion m) {
+		this.isPostioned = true;
+	}
+
+	@Override
+	public void collideWithFleas(Fleas m) {
+
+	}
+
+	@Override
+	public void collideWithSpider(Spider m) {
+		this.die();
+	}
+
+	@Override
+	public void collideWithAPBeam(APBeam m) {
+		m.decreasePenetrationCount(1);
+	}
+
+	@Override
+	public BufferedImage getImage() {
+		if (this.isPostioned) {
+			try {
+				if (this.destruction == 0) {
+					if (this.level.getlevel() == 1) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom.png"));
+					}
+					if (this.level.getlevel() == 2) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroomL2.png"));
+					}
+					if (this.level.getlevel() == 3) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroomL3.png"));
+					}
+					/*if (this.level.getlevel() == 4) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroomL4.png"));
+					}*/
+				} else if (this.destruction == 1) {
+					//if (this.level.getlevel() == 1) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom2.png"));
+					/*}
+					if (this.level.getlevel() == 2) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom2L2.png"));
+					}
+					if (this.level.getlevel() == 3) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom2L3.png"));
+					}
+					if (this.level.getlevel() == 4) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom2L4.png"));
+					}*/
+				} else if (this.destruction == 3) {
+					//if (this.level.getlevel() == 1) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom3.png"));
+					/*}
+					if (this.level.getlevel() == 2) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom3L2.png"));
+					}
+					if (this.level.getlevel() == 3) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom3L3.png"));
+					}
+					if (this.level.getlevel() == 4) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom3L4.png"));
+					}*/
+				} else if (this.destruction == 5) {
+					//if (this.level.getlevel() == 1) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom4.png"));
+					/*}
+					if (this.level.getlevel() == 2) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom4L2.png"));
+					}
+					if (this.level.getlevel() == 3) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom4L3.png"));
+					}
+					if (this.level.getlevel() == 4) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "poisonmushroom4L4.png"));
+					}*/
+				}
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+		} else {
+			try {
+				if (this.destruction == 0) {
+					if (this.level.getlevel() == 1) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom.png"));
+					}
+					if (this.level.getlevel() == 2) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroomL2.png"));
+					}
+					if (this.level.getlevel() == 3) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroomL3.png"));
+					}
+					/*
+					if (this.level.getlevel() == 4) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroomL4.png"));
+					}*/
+				} else if (this.destruction == 2) {
+					//if (this.level.getlevel() == 1) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom2.png"));
+					/*}
+					if (this.level.getlevel() == 2) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom2L2.png"));
+					}
+					if (this.level.getlevel() == 3) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom2L3.png"));
+					}
+					if (this.level.getlevel() == 4) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom2L4.png"));
+					}*/
+				} else if (this.destruction == 4) {
+					//if (this.level.getlevel() == 1) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom3.png"));
+					/*}
+					if (this.level.getlevel() == 2) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom3L2.png"));
+					}
+					if (this.level.getlevel() == 3) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom3L3.png"));
+					}
+					if (this.level.getlevel() == 4) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom3L4.png"));
+					}*/
+				} else if (this.destruction == 6) {
+					//if (this.level.getlevel() == 1) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom4.png"));
+					/*}
+					if (this.level.getlevel() == 2) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom4L2.png"));
+					}
+					if (this.level.getlevel() == 3) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom4L3.png"));
+					}
+					if (this.level.getlevel() == 4) {
+						this.image = ImageIO.read(new File("Files" + File.separator + "mushroom4L4.png"));
+					}*/
+				}
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+		}
+		return this.image;
+	}
+
+	@Override
+	public double getX() {
+		return this.getCenterPoint().getX() - this.diameter / 2;
+	}
+
+	@Override
+	public double getY() {
+		return this.getCenterPoint().getY() - this.diameter / 2;
+	}
+
+	@Override
+	public int getType() {
+		return 1;
+	}
+
+	@Override
+	public void collideWithBoss(BOSS m) {
+		this.die();
+
+	}
+
+}

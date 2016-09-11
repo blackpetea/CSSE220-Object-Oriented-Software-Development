@@ -1,0 +1,34 @@
+package polymorphism;
+
+public class Power implements Function {
+	private int power;
+
+	public Power(int power) {
+		this.power=power;
+	}
+
+	@Override
+	public String getFunctionName() {
+		if (this.power==2) {
+			return "square";
+		} else if (this.power==3) {
+			return "cube";
+		}
+		return null;
+	}
+
+	@Override
+	public double evaluate(double[] operands) {
+		double total=0;
+		double single=1;
+		for (double num:operands) {
+			for (int i=0;i<this.power;i++) {
+				single=single*num;
+			}
+			total+=single;
+			single=1;
+		}
+		return total;
+	}
+
+}

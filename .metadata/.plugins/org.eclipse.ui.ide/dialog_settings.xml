@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExternalProjectImportWizard">
+		<item value="true" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<item value="true" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="true" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value=""/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value="C:\Users\zhengm\Desktop\One More Practice Final.zip"/>
+			<item value="C:\Users\zhengm\Desktop\SumArrayInParallelSolution.zip"/>
+			<item value="C:\Users\zhengm\Desktop\MultithreadingSolution.zip"/>
+			<item value="C:\Users\zhengm\Desktop\SampleExam2AndFinal.zip"/>
+			<item value="C:\Users\zhengm\Google Drive\Courses\FQW\CSSE220\SampleExam1\SampleExam1.zip"/>
+		</list>
+	</section>
+	<section name="NewWizardAction">
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item value="700" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="643" key="DIALOG_HEIGHT"/>
+		<item value="582" key="DIALOG_X_ORIGIN"/>
+		<item value="121" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

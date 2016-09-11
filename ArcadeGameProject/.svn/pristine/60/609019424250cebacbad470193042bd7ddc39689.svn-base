@@ -1,0 +1,99 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+/**
+ * This is the main window for the game.
+ * 
+ * @author Tengji Zhang. Created Feb 2, 2016
+ */
+public class GameFrame extends JFrame {
+
+	private static final int GAP = 10;
+
+	/**
+	 * Constructs a frame for displaying the game graphcis.
+	 * 
+	 * @param a
+	 *            non-empty list of simulation panels to display
+	 */
+	public GameFrame() {
+		setTitle("Centipede");
+
+		add(buttonComponent(), BorderLayout.PAGE_END);
+		setResizable(false);
+
+		pack();
+
+	}
+
+	/**
+	 * Adds a quit button to the bottom-right corner of the window.
+	 */
+	private JComponent buttonComponent() {
+		Box panel = Box.createHorizontalBox();
+		panel.setBorder(BorderFactory.createEmptyBorder(0, GAP, GAP, GAP));
+		panel.add(Box.createHorizontalGlue());
+		JButton quitButton = new JButton("Quit");
+
+		ActionListener quitter = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				dispose();
+				System.exit(0);
+			}
+		};
+
+		quitButton.addActionListener(quitter);
+
+		JButton helpButton = new JButton("Help");
+		panel.add(helpButton);
+
+		ActionListener helper = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				final JFrame helpframe = new JFrame("Help");
+				JLabel label = new JLabel();
+				label.setText("<html>¡ú: " + "Move Right" + "<br />¡û:" + "Move Left" + "<br />¡ü:" + "Move Up"
+						+ "<br />¡ý:" + "Move Down" + "<br />U:" + "Increase Level" + "<br />D:" + "Decrease Level"
+						+ "<br />Space:" + "Shoot" + "<br />1:" + "Laser Gun" + "<br />2:" + "Shotgun" + "<br />3:"
+						+ "AP Gun" + "</HTML>");
+				helpframe.add(label, BorderLayout.CENTER);
+
+				JButton quit = new JButton("Quit");
+				quit.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						helpframe.setVisible(false);
+						helpframe.dispose();
+					}
+				});
+
+				helpframe.add(quit, BorderLayout.SOUTH);
+
+				helpframe.setSize(200, 250);
+				helpframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				helpframe.setVisible(true);
+			}
+		};
+
+		helpButton.addActionListener(helper);
+
+		panel.add(quitButton);
+		return panel;
+	}
+
+	public void helptext(JFrame frame) {
+
+	}
+
+}

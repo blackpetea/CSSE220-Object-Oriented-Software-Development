@@ -1,0 +1,72 @@
+package ballworlds;
+
+import java.awt.Color;
+import java.awt.geom.Point2D;
+
+import util.Random;
+
+public class Pulsar extends Ball {
+
+	private double radius;
+	private Color color;
+	private int rpg;
+	private boolean flag;
+
+	public Pulsar(BallEnvironment world) {
+		super(world);
+
+		// Set the radius of circle as 1/20 of frame width.
+		this.radius = world.getSize().getWidth() / 20;
+
+		// Random choose the center of circle
+		int x = Random.randRange((int) this.radius, (int) (world.getSize().getWidth() - this.radius));
+		int y = Random.randRange((int) this.radius, (int) (world.getSize().getHeight() - this.radius));
+		super.setCenterPoint(new Point2D.Double(x, y));
+
+		// Set up the color of circle
+		this.rpg = 0;
+		this.color = Color.white;
+		this.flag = true;
+	}
+
+	@Override
+	public Color getColor() {
+		return this.color;
+	}
+
+	@Override
+	public void updatePosition() {
+		// The position will not change.
+
+	}
+
+	@Override
+	public void updateSize() {
+		// The size will not change.
+
+	}
+
+	@Override
+	public void updateColor() {
+		if (this.flag) {// Increase the value of RPG 1 each time
+			this.rpg += 1;
+			this.color = new Color(this.rpg, this.rpg, this.rpg);
+			if (this.rpg == 255) {
+				this.flag = false;
+			}
+		} else {// Decrease the value of RPG 1 each time
+			this.rpg -= 1;
+			this.color = new Color(this.rpg, this.rpg, this.rpg);
+			if (this.rpg == 0) {
+				this.flag = true;
+			}
+		}
+
+	}
+
+	@Override
+	public double getDiameter() {
+		return this.radius * 2;
+	}
+
+}

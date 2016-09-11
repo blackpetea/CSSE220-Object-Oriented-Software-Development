@@ -1,0 +1,131 @@
+import java.awt.Color;
+import java.awt.Polygon;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+
+public class APBeam extends Bullet {
+	private int penetrationCount;
+
+	public APBeam(GameWorld world, Point2D centerPoint) {
+		super(world, centerPoint);
+		this.color = Color.LIGHT_GRAY;
+		this.diameter = 20;
+		this.speedx = 0;
+		this.speedy = 8;
+		this.penetrationCount = 2;
+		this.direction=1;
+	}
+	
+	public APBeam(GameWorld world, Point2D centerPoint,int direction) {
+		super(world, centerPoint);
+		this.color = Color.LIGHT_GRAY;
+		this.diameter = 20;
+		this.speedx = 0;
+		this.speedy = 10*direction;
+		this.penetrationCount = 2;
+		this.direction=direction;
+	}
+
+	public void decreasePenetrationCount(int number) {
+		this.penetrationCount = this.penetrationCount - number;
+	}
+
+	private void penetrationReaction() {
+		if (this.penetrationCount == 0) {
+			this.die();
+		}
+	}
+
+	@Override
+	public String getClassName() {
+		return "APBeam";
+	}
+
+	@Override
+	public Shape getShape() {
+		return new Polygon(
+				new int[] { (int) this.getCenterPoint().getX(), (int) this.getCenterPoint().getX() - 10,
+						(int) this.getCenterPoint().getX() + 10 },
+				new int[] { (int) this.getCenterPoint().getY() + 5, (int) this.getCenterPoint().getY() + 25,
+						(int) this.getCenterPoint().getY() + 25 },
+				3);
+	}
+
+	@Override
+	public void collide(Creature m) {
+		m.collideWithBullet(this);
+
+	}
+
+	@Override
+	public void collideWithMushroom(Mushroom m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithCentipede(Centipede m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithHero(Hero m) {
+
+	}
+
+	@Override
+	public void collideWithBullet(Bullet m) {
+
+	}
+
+	@Override
+	public void collideWithScorpion(Scorpion m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithFleas(Fleas m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithSpider(Spider m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithAPBeam(APBeam m) {
+
+	}
+
+	@Override
+	public BufferedImage getImage() {
+		// TODO Auto-generated method stub.
+		return null;
+	}
+
+	@Override
+	public double getX() {
+		// TODO Auto-generated method stub.
+		return 0;
+	}
+
+	@Override
+	public double getY() {
+		// TODO Auto-generated method stub.
+		return 0;
+	}
+
+	@Override
+	public int getType() {
+		// TODO Auto-generated method stub.
+		return 0;
+	}
+
+	@Override
+	public void collideWithBoss(BOSS m) {
+		if (this.direction>0) {
+			this.die();
+		}	
+	}
+}

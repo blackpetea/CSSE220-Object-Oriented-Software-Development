@@ -1,0 +1,88 @@
+import java.awt.Color;
+import java.awt.Polygon;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
+
+public class APBeam extends Bullet {
+	private int penetrationCount;
+
+	public APBeam(GameWorld world, Point2D centerPoint) {
+		super(world, centerPoint);
+		this.color = Color.LIGHT_GRAY;
+		this.diameter = 20;
+		this.speedx = 0;
+		this.speedy = 6;
+		this.penetrationCount = 2;
+	}
+
+	public void decreasePenetrationCount(int number) {
+		this.penetrationCount = this.penetrationCount - number;
+	}
+
+	private void penetrationReaction() {
+		if (this.penetrationCount == 0) {
+			this.die();
+		}
+	}
+
+	@Override
+	public String getClassName() {
+		return "APBeam";
+	}
+
+	@Override
+	public Shape getShape() {
+		return new Polygon(
+				new int[] { (int) this.getCenterPoint().getX(), (int) this.getCenterPoint().getX() - 10,
+						(int) this.getCenterPoint().getX() + 10 },
+				new int[] { (int) this.getCenterPoint().getY() + 5, (int) this.getCenterPoint().getY() + 25,
+						(int) this.getCenterPoint().getY() + 25 },
+				3);
+	}
+
+	@Override
+	public void collide(Creature m) {
+		m.collideWithBullet(this);
+
+	}
+
+	@Override
+	public void collideWithMushroom(Mushroom m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithCentipede(Centipede m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithHero(Hero m) {
+
+	}
+
+	@Override
+	public void collideWithBullet(Bullet m) {
+
+	}
+
+	@Override
+	public void collideWithScorpion(Scorpion m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithFleas(Fleas m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithSpider(Spider m) {
+		this.penetrationReaction();
+	}
+
+	@Override
+	public void collideWithAPBeam(APBeam m) {
+
+	}
+}

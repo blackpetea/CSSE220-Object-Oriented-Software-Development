@@ -1,0 +1,125 @@
+import java.awt.Color;
+import java.awt.Shape;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+
+public class Mushroom extends Creature implements Drawable,Temporal,Relocatable{
+	private String name;
+	private double destruction;
+	private boolean isPostioned;
+
+	public Mushroom(GameWorld world, Point2D centerPoint) {
+		super(world, centerPoint);
+		this.name="Mushroom";
+		this.diameter=20;
+		this.destruction=1;
+		this.isPostioned=false;
+		this.color=Color.CYAN;
+	}
+
+	public boolean isPostioned() {
+		return this.isPostioned;
+	}
+
+
+	public void setPostioned(boolean isPostioned) {
+		this.isPostioned = isPostioned;
+	}
+
+	@Override
+	public Color getColor() {
+		return this.color;
+	}
+
+	@Override
+	public void updatePosition() {
+		
+	}
+
+	@Override
+	public void updateSize() {
+		if (destruction==0) {
+			this.die();
+		}
+	}
+
+	@Override
+	public void updateColor() {
+		if (this.isPostioned) {
+			this.color=Color.MAGENTA;
+		} else {
+			this.color=Color.CYAN;
+		}
+	}
+
+	@Override
+	public double getDiameter() {
+		return this.diameter;
+	}
+
+	@Override
+	public String getClassName() {
+		return this.name;
+	}
+	
+	@Override
+	public Shape getShape() {
+		double x = getCenterPoint().getX();
+		double y = getCenterPoint().getY();
+		double size = getDiameter();
+		return new Rectangle2D.Double(x - size / 2, y - size / 2, size, size*this.destruction);
+	}
+
+	// -------------------------------------------------------------------------
+	// Abstract "Collision methods" that must be overridden by subclasses.
+	
+	@Override
+	public void collide(Creature m) {
+		m.collideWithMushroom(this);
+		
+	}
+
+	@Override
+	public void collideWithMushroom(Mushroom m) {
+		
+	}
+
+	@Override
+	public void collideWithCentipede(Centipede m) {
+		
+	}
+
+	@Override
+	public void collideWithHero(Hero m) {
+		
+	}
+
+	@Override
+	public void collideWithBullet(Bullet m) {
+		if (!m.getClassName().equals("APBeam")) {
+			this.destruction=this.destruction-0.125;
+		}
+	}
+
+	@Override
+	public void collideWithScorpion(Scorpion m) {
+		this.isPostioned=true;
+	}
+
+	@Override
+	public void collideWithFleas(Fleas m) {
+		
+	}
+
+	@Override
+	public void collideWithSpider(Spider m) {
+		this.die();
+	}
+
+	@Override
+	public void collideWithAPBeam(APBeam m) {
+		m.decreasePenetrationCount(1);
+	}
+	
+
+}

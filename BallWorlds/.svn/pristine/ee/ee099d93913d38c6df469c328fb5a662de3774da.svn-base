@@ -1,0 +1,72 @@
+package ballworlds;
+
+import java.awt.Color;
+import java.awt.geom.Point2D;
+
+import util.Random;
+
+public class Exploder extends AbstractBouncer {
+
+	private int sizemulti;
+	private double initialRadius;
+	private double radius;
+	private Color color;
+
+	public Exploder(BallEnvironment world) {
+		super(world);
+		this.color = Color.PINK;
+		this.sizemulti = Random.randRange(2, 11);
+		this.radius = world.getSize().getWidth() / 30;
+		this.initialRadius = this.radius;
+	}
+
+	public Exploder(BallEnvironment world, double radius, Point2D center) {
+		super(world);
+		this.color = Color.PINK;
+		this.sizemulti = Random.randRange(2, 11);
+		super.setCenterPoint(center);
+		this.radius = world.getSize().getWidth() / 30;
+		this.initialRadius = this.radius;
+	}
+
+	@Override
+	public Color getColor() {
+		return this.color;
+	}
+
+	@Override
+	public void updatePosition() {
+		super.setCenterPoint(super.bouncing());
+	}
+
+	@Override
+	public void updateSize() {
+		// For every 10ms, the size will grow 1% 
+		double new_r = this.radius * 1.001;
+
+		// Explodes when size is too large
+		if (new_r >= this.initialRadius * this.sizemulti) {
+			Exploder son_ball1 = new Exploder(super.getWorld(), this.radius / (2 * this.sizemulti),
+					super.getCenterPoint());
+			Exploder son_ball2 = new Exploder(super.getWorld(), this.radius / (2 * this.sizemulti),
+					super.getCenterPoint());
+			super.getWorld().addBall(son_ball1);
+			super.getWorld().addBall(son_ball2);
+			super.die();
+		}
+		this.radius = new_r;
+
+	}
+
+	@Override
+	public void updateColor() {
+		// Color does not change
+
+	}
+
+	@Override
+	public double getDiameter() {
+		return this.radius * 2;
+	}
+
+}

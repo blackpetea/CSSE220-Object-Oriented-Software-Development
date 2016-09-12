@@ -1,4 +1,4 @@
-My own backup for CSSE220, Rose-Hulman Institute of Technology
+My own backup for CSSE220 in Rose-Hulman Institute of Technology
 
 DO NOT COPY ANY CODE IN THIS REPOSITORY.
   
